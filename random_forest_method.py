@@ -1,4 +1,4 @@
-from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 import dataset
@@ -17,7 +17,7 @@ data = dataset.load()
 x_train, x_test, y_train, y_test = train_test_split(
     data[0], data[1], test_size=0.2)
 
-clf = GaussianNB()
+clf = RandomForestClassifier(n_estimators=100)
 clf.fit(x_train, y_train)
 y_pred = clf.predict(x_test)
 score = accuracy_score(y_test, y_pred)
@@ -31,8 +31,13 @@ score = accuracy_score(y_test, y_pred)
 print('Test Size:', len(y_test))
 print('Train Size:', len(y_train))
 print('Accuracy:', score)
+print('FeatureIM:')
+print(list(zip(dataset.prepareThaiChars(), clf.feature_importances_)))
 
-counted, _ = dataset.countThai(['พิชวัชร', 'บูรพา', 'ณัฐพงศ์'], ['01011999', '01011999', '01011999'])
+counted, _ = dataset.countThai(
+    ['พิชวัชร', 'บูรพา', 'ณัฐพงศ์'],
+    ['01011999', '01011999', '01011999']
+)
 # print(counted)
 for f in clf.predict(counted):
     print(dow[f])

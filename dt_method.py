@@ -1,4 +1,4 @@
-from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 import dataset
@@ -17,7 +17,7 @@ data = dataset.load()
 x_train, x_test, y_train, y_test = train_test_split(
     data[0], data[1], test_size=0.2)
 
-clf = GaussianNB()
+clf = DecisionTreeClassifier()
 clf.fit(x_train, y_train)
 y_pred = clf.predict(x_test)
 score = accuracy_score(y_test, y_pred)
